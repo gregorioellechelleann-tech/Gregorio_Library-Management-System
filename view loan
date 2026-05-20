@@ -1,0 +1,62 @@
+# Loan Class
+class Loan:
+    def __init__(self, member_name, book_title, is_active):
+        self.member_name = member_name
+        self.book_title = book_title
+        self.is_active = is_active
+
+
+# Library Service Class
+class LibraryService:
+    def __init__(self):
+        self.loans = []
+
+    # Add sample loans
+    def add_sample_loans(self):
+        self.loans.append(Loan("John", "Python Basics", True))
+        self.loans.append(Loan("Sarah", "Data Structures", False))
+        self.loans.append(Loan("Mike", "AI Fundamentals", True))
+
+    # View loans function
+    def view_loans(self):
+
+        # Check if loans list is empty
+        if len(self.loans) == 0:
+            print("No loans found.")
+            return
+
+        # Output header
+        print("Loans:")
+        print("-----------------------------")
+
+        # Loop through each loan
+        for loan in self.loans:
+
+            # Check loan status
+            if loan.is_active:
+                status = "Active"
+            else:
+                status = "Closed"
+
+            # Display loan details
+            print(f"{loan.member_name} borrowed "
+                  f"{loan.book_title} [{status}]")
+
+
+# Main Program
+def main():
+
+    service = LibraryService()
+
+    # Add demo data
+    service.add_sample_loans()
+
+    # User chooses option 7
+    choice = "7"
+
+    if choice == "7":
+        service.view_loans()
+
+
+# Run Program
+main()
