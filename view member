@@ -1,0 +1,58 @@
+# ===== Library Service =====
+
+class LibraryService:
+    def __init__(self):
+        # Sample members data
+        self.members = {
+            1: {"name": "John Doe", "email": "john@example.com"},
+            2: {"name": "Jane Smith", "email": "jane@example.com"},
+            3: {"name": "Mike Brown", "email": "mike@example.com"}
+        }
+
+    # view_members()
+    def view_members(self):
+        members = list(self.members.values())
+
+        # Check if members list is empty
+        if not members:
+            print("No members found.")
+        else:
+            print("\nMembers:\n")
+
+            # Loop through each member
+            for member_id, member in self.members.items():
+                print(f"{member_id} - {member['name']} ({member['email']})")
+
+
+# ===== Main Program =====
+
+def main():
+    service = LibraryService()
+
+    while True:
+        print("\n===== Library Menu =====")
+        print("1. Add Member")
+        print("2. Remove Member")
+        print("3. Search Member")
+        print("4. Borrow Book")
+        print("5. Return Book")
+        print("6. View Members")
+        print("0. Exit")
+
+        choice = input("Enter choice: ")
+
+        # Flowchart option "6"
+        if choice == "6":
+            service.view_members()
+
+        elif choice == "0":
+            print("Program ended.")
+            break
+
+        else:
+            print("Option not implemented yet.")
+
+
+# Run program
+if __name__ == "__main__":
+    main()
