@@ -1,0 +1,57 @@
+class Member:
+    def __init__(self, member_id, name, email):
+        self.member_id = member_id
+        self.name = name
+        self.email = email
+
+
+class LibraryService:
+    def __init__(self):
+        self._members = {}  # dictionary to store members
+
+    def register_member(self):
+        # Input: Member ID
+        member_id = input("Enter Member ID: ")
+
+        # Check if member already exists
+        if member_id in self._members:
+            print("Member ID already exists!")
+            return
+
+        # Input: Member Name
+        name = input("Enter Member Name: ")
+
+        # Input: Member Email
+        email = input("Enter Member Email: ")
+
+        # Create Member object
+        member = Member(member_id, name, email)
+
+        # Store member in dictionary
+        self._members[member.member_id] = member
+
+        # Output
+        print(f"Member registered: {name}")
+
+
+def main():
+    service = LibraryService()
+
+    while True:
+        print("\n=== Library Menu ===")
+        print("1. Register Member")
+        print("2. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            service.register_member()
+        elif choice == "2":
+            print("Exiting program...")
+            break
+        else:
+            print("Invalid choice. Try again.")
+
+
+if __name__ == "__main__":
+    main()
