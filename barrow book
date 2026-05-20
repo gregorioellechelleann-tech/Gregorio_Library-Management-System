@@ -1,0 +1,127 @@
+# Custom Exceptions
+class BookNotFoundError(Exception):
+    pass
+
+
+class MemberNotFoundError(Exception):
+    pass
+
+
+class BookUnavailableError(Exception):
+    pass
+
+
+# Book Class
+class Book:
+    def __init__(self, book_id, title):
+        self.book_id = book_id
+        self.title = title
+        self.available = True
+
+    def borrow(self):
+        self.available = False
+
+
+# Member Class
+class Member:
+    def __init__(self, member_id, name):
+        self.member_id = member_id
+        self.name = name
+
+
+# Loan Class
+class Loan:
+    loan_counter = 1
+
+    def __init__(self, book, member):
+        self.loan_id = f"LN-{Loan.loan_counter:03d}"
+        Loan.loan_counter += 1
+
+        self.book = book
+        self.member = member
+
+    def __str__(self):
+        return f"{self.member.name} borrowed '{self.book.title}' (Loan ID: {self.loan_id})"
+
+
+# Library Service Class
+class LibraryService:
+    def __init__(self):
+        self.books = {}
+        self.members = {}
+        self.loans = []
+
+    # Add sample books
+    def add_book(self, book):
+        self.books[book.book_id] = book
+
+    # Add sample members
+    def add_member(self, member):
+        self.members[member.member_id] = member
+
+    # Borrow Book Function (Based on Flowchart)
+    def borrow_book(self):
+        print("\n=== Borrow Book ===")
+
+        # Input Book ID
+        book_id = input("Enter Book ID: ")
+
+        # Input Member ID
+        member_id = input("Enter Member ID: ")
+
+        # book = self.books.get(book_id)
+        book = self.books.get(book_id)
+
+        # Check if book exists
+        if book is None:
+            raise BookNotFoundError("Book not found.")
+
+        # member = self.members.get(member_id)
+        member = self.members.get(member_id)
+
+        # Check if member exists
+        if member is None:
+            raise MemberNotFoundError("Member not found.")
+
+        # Check if book is available
+        if book.available is False:
+            raise BookUnavailableError("Book is already borrowed.")
+
+        # Create Loan
+        loan = Loan(book, member)
+
+        # Append to loans list
+        self.loans.append(loan)
+
+        # Borrow book
+        book.borrow()
+
+        # Output success message
+        print(f"{member.name} borrowed '{book.title}'")
+        print(f"Generated Loan ID: {loan.loan_id}")
+
+
+# =========================
+# Main Program
+# =========================
+library = LibraryService()
+
+# Sample Data
+library.add_book(Book("B001", "Python Programming"))
+library.add_book(Book("B002", "Data Structures"))
+
+library.add_member(Member("M001", "Alice"))
+library.add_member(Member("M002", "Bob"))
+
+# Run Borrow Process
+try:
+    library.borrow_book()
+
+except BookNotFoundError as e:
+    print("Error:", e)
+
+except MemberNotFoundError as e:
+    print("Error:", e)
+
+except BookUnavailableError as e:
+    print("Error:", e)
